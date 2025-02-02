@@ -9,19 +9,16 @@ class TarwegeServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/tarwege.php', 'tarwege');
-
         $this->app->singleton(TarwegeClient::class, function ($app) {
-            return new TarwegeClient(config('tarwege.secret'));
+            $config = $app['config']['tarwege'];
+            return new TarwegeClient($config['api_key'], $config['base_url'] ?? 'https://api.tarwege.com');
         });
     }
 
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../../config/tarwege.php' => config_path('tarwege.php'),
-            ], 'tarwege-config');
-        }
+        $this->publishes([
+            __DIR__.'/../../config/tarwege.php' => config_path('tarwege.php'),
+        ], 'config');
     }
 }
