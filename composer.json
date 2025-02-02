@@ -1,7 +1,13 @@
 {
   "name": "tarwege/sms-whatsapp",
-  "description": "Official Laravel client for Tarwege SMS & WhatsApp API",
+  "description": "A PHP package to interact with Tarwege SMS, WhatsApp, and USSD endpoints.",
   "type": "library",
+  "authors": [
+    {
+      "name": "tarwege",
+      "email": "info@tarwege.com"
+    }
+  ],
   "license": "MIT",
   "autoload": {
     "psr-4": {
@@ -15,7 +21,7 @@
   },
   "require": {
     "php": "^8.0",
-    "guzzlehttp/guzzle": "^7.0",
+    "guzzlehttp/guzzle": "^7.9",
     "illuminate/support": "^9.0|^10.0"
   },
   "extra": {
@@ -28,6 +34,6 @@
       }
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true
 }
