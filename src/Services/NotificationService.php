@@ -14,7 +14,7 @@ class NotificationService
     /**
      * Delete a notification.
      */
-    public function deleteNotification(string $notificationId)
+    public function deleteNotification(string $notificationId): mixed
     {
         return $this->client->callApi("/notifications/{$notificationId}/delete", 'DELETE');
     }
@@ -22,7 +22,7 @@ class NotificationService
     /**
      * Get notifications.
      */
-    public function getNotifications(array $params = [])
+    public function getNotifications(array $params = []): mixed
     {
         return $this->client->callApi('/notifications', 'GET', $params);
     }

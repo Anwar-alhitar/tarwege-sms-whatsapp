@@ -14,7 +14,7 @@ class OTPService
     /**
      * Send an OTP.
      */
-    public function sendOTP(array $data)
+    public function sendOTP(array $data): mixed
     {
         return $this->client->callApi('/otp/send', 'POST', $data);
     }
@@ -22,7 +22,7 @@ class OTPService
     /**
      * Verify an OTP.
      */
-    public function verifyOTP(array $data)
+    public function verifyOTP(array $data): mixed
     {
         return $this->client->callApi('/otp/verify', 'POST', $data);
     }

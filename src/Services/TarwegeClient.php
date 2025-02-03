@@ -45,7 +45,7 @@ class TarwegeClient
      *
      * @throws TarwegeApiException
      */
-    public function callApi(string $endpoint, string $method = 'GET', array $params = [])
+    public function callApi(string $endpoint, string $method = 'GET', array $params = []): mixed
     {
         try {
             // Prepare options depending on the request method.

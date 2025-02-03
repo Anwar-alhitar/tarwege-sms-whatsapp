@@ -14,7 +14,7 @@ class WhatsAppService
     /**
      * Delete a received chat.
      */
-    public function deleteReceivedChat(string $chatId)
+    public function deleteReceivedChat(string $chatId): mixed
     {
         return $this->client->callApi("/whatsapp/chats/received/{$chatId}/delete", 'DELETE');
     }
@@ -22,7 +22,7 @@ class WhatsAppService
     /**
      * Delete a sent chat.
      */
-    public function deleteSentChat(string $chatId)
+    public function deleteSentChat(string $chatId): mixed
     {
         return $this->client->callApi("/whatsapp/chats/sent/{$chatId}/delete", 'DELETE');
     }
@@ -30,7 +30,7 @@ class WhatsAppService
     /**
      * Delete a WhatsApp account.
      */
-    public function deleteWhatsAppAccount(string $accountId)
+    public function deleteWhatsAppAccount(string $accountId): mixed
     {
         return $this->client->callApi("/whatsapp/account/{$accountId}/delete", 'DELETE');
     }
@@ -38,7 +38,7 @@ class WhatsAppService
     /**
      * Delete a WhatsApp campaign.
      */
-    public function deleteWhatsAppCampaign(string $campaignId)
+    public function deleteWhatsAppCampaign(string $campaignId): mixed
     {
         return $this->client->callApi("/whatsapp/campaign/{$campaignId}/delete", 'DELETE');
     }
@@ -46,7 +46,7 @@ class WhatsAppService
     /**
      * Get WhatsApp accounts.
      */
-    public function getAccounts(array $params = [])
+    public function getAccounts(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/accounts', 'GET', $params);
     }
@@ -54,7 +54,7 @@ class WhatsAppService
     /**
      * Get pending chats.
      */
-    public function getPendingChats(array $params = [])
+    public function getPendingChats(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/chats/pending', 'GET', $params);
     }
@@ -62,7 +62,7 @@ class WhatsAppService
     /**
      * Get received chats.
      */
-    public function getReceivedChats(array $params = [])
+    public function getReceivedChats(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/chats/received', 'GET', $params);
     }
@@ -70,7 +70,7 @@ class WhatsAppService
     /**
      * Get sent chats.
      */
-    public function getSentChats(array $params = [])
+    public function getSentChats(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/chats/sent', 'GET', $params);
     }
@@ -78,7 +78,7 @@ class WhatsAppService
     /**
      * Get WhatsApp campaigns.
      */
-    public function getWhatsAppCampaigns(array $params = [])
+    public function getWhatsAppCampaigns(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/campaigns', 'GET', $params);
     }
@@ -86,7 +86,7 @@ class WhatsAppService
     /**
      * Get WhatsApp group contacts.
      */
-    public function getWhatsAppGroupContacts(string $groupId, array $params = [])
+    public function getWhatsAppGroupContacts(string $groupId, array $params = []): mixed
     {
         return $this->client->callApi("/whatsapp/groups/{$groupId}/contacts", 'GET', $params);
     }
@@ -94,7 +94,7 @@ class WhatsAppService
     /**
      * Get WhatsApp groups.
      */
-    public function getWhatsAppGroups(array $params = [])
+    public function getWhatsAppGroups(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/groups', 'GET', $params);
     }
@@ -102,7 +102,7 @@ class WhatsAppService
     /**
      * Get WhatsApp QR image.
      */
-    public function getWhatsAppQrImage(string $accountId)
+    public function getWhatsAppQrImage(string $accountId): mixed
     {
         return $this->client->callApi("/whatsapp/account/{$accountId}/qr", 'GET');
     }
@@ -110,7 +110,7 @@ class WhatsAppService
     /**
      * Get WhatsApp servers.
      */
-    public function getWhatsAppServers(array $params = [])
+    public function getWhatsAppServers(array $params = []): mixed
     {
         return $this->client->callApi('/whatsapp/servers', 'GET', $params);
     }
@@ -118,7 +118,7 @@ class WhatsAppService
     /**
      * Get WhatsApp information after linking.
      */
-    public function getWhatsAppInformationAfterLinking(string $accountId)
+    public function getWhatsAppInformationAfterLinking(string $accountId): mixed
     {
         return $this->client->callApi("/whatsapp/account/{$accountId}/info", 'GET');
     }
@@ -126,7 +126,7 @@ class WhatsAppService
     /**
      * Link a WhatsApp account.
      */
-    public function linkWhatsAppAccount(array $data)
+    public function linkWhatsAppAccount(array $data): mixed
     {
         return $this->client->callApi('/whatsapp/account/link', 'POST', $data);
     }
@@ -134,7 +134,7 @@ class WhatsAppService
     /**
      * Relink a WhatsApp account.
      */
-    public function relinkWhatsAppAccount(array $data)
+    public function relinkWhatsAppAccount(array $data): mixed
     {
         return $this->client->callApi('/whatsapp/account/relink', 'POST', $data);
     }
@@ -142,7 +142,7 @@ class WhatsAppService
     /**
      * Send bulk chats.
      */
-    public function sendBulkChats(array $data)
+    public function sendBulkChats(array $data): mixed
     {
         return $this->client->callApi('/whatsapp/chats/send/bulk', 'POST', $data);
     }
@@ -150,7 +150,7 @@ class WhatsAppService
     /**
      * Send a single chat.
      */
-    public function sendSingleChat(array $data)
+    public function sendSingleChat(array $data): mixed
     {
         return $this->client->callApi('/whatsapp/chats/send/single', 'POST', $data);
     }
@@ -158,7 +158,7 @@ class WhatsAppService
     /**
      * Start a WhatsApp campaign.
      */
-    public function startWhatsAppCampaign(string $campaignId, array $data = [])
+    public function startWhatsAppCampaign(string $campaignId, array $data = []): mixed
     {
         return $this->client->callApi("/whatsapp/campaign/{$campaignId}/start", 'POST', $data);
     }
@@ -166,7 +166,7 @@ class WhatsAppService
     /**
      * Stop a WhatsApp campaign.
      */
-    public function stopWhatsAppCampaign(string $campaignId, array $data = [])
+    public function stopWhatsAppCampaign(string $campaignId, array $data = []): mixed
     {
         return $this->client->callApi("/whatsapp/campaign/{$campaignId}/stop", 'POST', $data);
     }
@@ -174,7 +174,7 @@ class WhatsAppService
     /**
      * Validate a WhatsApp phone number.
      */
-    public function validateWhatsAppPhoneNumber(array $data)
+    public function validateWhatsAppPhoneNumber(array $data): mixed
     {
         return $this->client->callApi('/whatsapp/phone/validate', 'POST', $data);
     }

@@ -14,7 +14,7 @@ class SmsService
     /**
      * Delete a received message.
      */
-    public function deleteReceivedMessage(string $messageId)
+    public function deleteReceivedMessage(string $messageId): mixed
     {
         return $this->client->callApi("/sms/received/{$messageId}/delete", 'DELETE');
     }
@@ -22,7 +22,7 @@ class SmsService
     /**
      * Delete an SMS campaign.
      */
-    public function deleteSmsCampaign(string $campaignId)
+    public function deleteSmsCampaign(string $campaignId): mixed
     {
         return $this->client->callApi("/sms/campaign/{$campaignId}/delete", 'DELETE');
     }
@@ -30,7 +30,7 @@ class SmsService
     /**
      * Delete a sent message.
      */
-    public function deleteSentMessage(string $messageId)
+    public function deleteSentMessage(string $messageId): mixed
     {
         return $this->client->callApi("/sms/sent/{$messageId}/delete", 'DELETE');
     }
@@ -38,7 +38,7 @@ class SmsService
     /**
      * Get devices.
      */
-    public function getDevices(array $params = [])
+    public function getDevices(array $params = []): mixed
     {
         return $this->client->callApi('/sms/devices', 'GET', $params);
     }
@@ -46,7 +46,7 @@ class SmsService
     /**
      * Get pending messages.
      */
-    public function getPendingMessages(array $params = [])
+    public function getPendingMessages(array $params = []): mixed
     {
         return $this->client->callApi('/sms/pending', 'GET', $params);
     }
@@ -54,7 +54,7 @@ class SmsService
     /**
      * Get received messages.
      */
-    public function getReceivedMessages(array $params = [])
+    public function getReceivedMessages(array $params = []): mixed
     {
         return $this->client->callApi('/sms/received', 'GET', $params);
     }
@@ -62,7 +62,7 @@ class SmsService
     /**
      * Get SMS campaigns.
      */
-    public function getSmsCampaigns(array $params = [])
+    public function getSmsCampaigns(array $params = []): mixed
     {
         return $this->client->callApi('/sms/campaigns', 'GET', $params);
     }
@@ -70,7 +70,7 @@ class SmsService
     /**
      * Get sent messages.
      */
-    public function getSentMessages(array $params = [])
+    public function getSentMessages(array $params = []): mixed
     {
         return $this->client->callApi('/sms/sent', 'GET', $params);
     }
@@ -78,7 +78,7 @@ class SmsService
     /**
      * Send bulk messages.
      */
-    public function sendBulkMessages(array $data)
+    public function sendBulkMessages(array $data): mixed
     {
         return $this->client->callApi('/sms/send/bulk', 'POST', $data);
     }
@@ -86,7 +86,7 @@ class SmsService
     /**
      * Send a single message.
      */
-    public function sendSingleMessage(array $data)
+    public function sendSingleMessage(array $data): mixed
     {
         return $this->client->callApi('/sms/send/single', 'POST', $data);
     }
@@ -94,7 +94,7 @@ class SmsService
     /**
      * Start an SMS campaign.
      */
-    public function startSmsCampaign(string $campaignId, array $data = [])
+    public function startSmsCampaign(string $campaignId, array $data = []): mixed
     {
         return $this->client->callApi("/sms/campaign/{$campaignId}/start", 'POST', $data);
     }
@@ -102,7 +102,7 @@ class SmsService
     /**
      * Stop an SMS campaign.
      */
-    public function stopSmsCampaign(string $campaignId, array $data = [])
+    public function stopSmsCampaign(string $campaignId, array $data = []): mixed
     {
         return $this->client->callApi("/sms/campaign/{$campaignId}/stop", 'POST', $data);
     }

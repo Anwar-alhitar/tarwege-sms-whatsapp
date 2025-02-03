@@ -14,7 +14,7 @@ class SystemService
     /**
      * Get gateway rates.
      */
-    public function getGatewayRates(array $params = [])
+    public function getGatewayRates(array $params = []): mixed
     {
         return $this->client->callApi('/system/gateway-rates', 'GET', $params);
     }
@@ -22,7 +22,7 @@ class SystemService
     /**
      * Get shorteners.
      */
-    public function getShorteners(array $params = [])
+    public function getShorteners(array $params = []): mixed
     {
         return $this->client->callApi('/system/shorteners', 'GET', $params);
     }

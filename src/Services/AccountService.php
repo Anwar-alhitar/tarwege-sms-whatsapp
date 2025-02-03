@@ -14,7 +14,7 @@ class AccountService
     /**
      * Get Partner Earnings.
      */
-    public function getPartnerEarnings(array $params = [])
+    public function getPartnerEarnings(array $params = []): mixed
     {
         return $this->client->callApi('/account/partner-earnings', 'GET', $params);
     }
@@ -22,7 +22,7 @@ class AccountService
     /**
      * Get Remaining Credits.
      */
-    public function getRemainingCredits(array $params = [])
+    public function getRemainingCredits(array $params = []): mixed
     {
         return $this->client->callApi('/account/remaining-credits', 'GET', $params);
     }
@@ -30,7 +30,7 @@ class AccountService
     /**
      * Get Subscription Package.
      */
-    public function getSubscriptionPackage(array $params = [])
+    public function getSubscriptionPackage(array $params = []): mixed
     {
         return $this->client->callApi('/account/subscription-package', 'GET', $params);
     }

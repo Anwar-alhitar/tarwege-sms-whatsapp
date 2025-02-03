@@ -14,7 +14,7 @@ class ContactService
     /**
      * Create a new contact.
      */
-    public function createContact(array $data)
+    public function createContact(array $data): mixed
     {
         return $this->client->callApi('/contacts/create', 'POST', $data);
     }
@@ -22,7 +22,7 @@ class ContactService
     /**
      * Create a new group.
      */
-    public function createGroup(array $data)
+    public function createGroup(array $data): mixed
     {
         return $this->client->callApi('/contacts/group/create', 'POST', $data);
     }
@@ -30,7 +30,7 @@ class ContactService
     /**
      * Delete a contact.
      */
-    public function deleteContact(string $contactId)
+    public function deleteContact(string $contactId): mixed
     {
         return $this->client->callApi("/contacts/{$contactId}/delete", 'DELETE');
     }
@@ -38,7 +38,7 @@ class ContactService
     /**
      * Delete a group.
      */
-    public function deleteGroup(string $groupId)
+    public function deleteGroup(string $groupId): mixed
     {
         return $this->client->callApi("/contacts/group/{$groupId}/delete", 'DELETE');
     }
@@ -46,7 +46,7 @@ class ContactService
     /**
      * Delete unsubscribed contacts.
      */
-    public function deleteUnsubscribed(array $params = [])
+    public function deleteUnsubscribed(array $params = []): mixed
     {
         return $this->client->callApi('/contacts/unsubscribed/delete', 'DELETE', $params);
     }
@@ -54,7 +54,7 @@ class ContactService
     /**
      * Get contacts.
      */
-    public function getContacts(array $params = [])
+    public function getContacts(array $params = []): mixed
     {
         return $this->client->callApi('/contacts', 'GET', $params);
     }
@@ -62,7 +62,7 @@ class ContactService
     /**
      * Get groups.
      */
-    public function getGroups(array $params = [])
+    public function getGroups(array $params = []): mixed
     {
         return $this->client->callApi('/contacts/groups', 'GET', $params);
     }
@@ -70,7 +70,7 @@ class ContactService
     /**
      * Get unsubscribed contacts.
      */
-    public function getUnsubscribed(array $params = [])
+    public function getUnsubscribed(array $params = []): mixed
     {
         return $this->client->callApi('/contacts/unsubscribed', 'GET', $params);
     }
