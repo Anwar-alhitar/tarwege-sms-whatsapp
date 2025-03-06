@@ -18,7 +18,7 @@ class TarwegeClient
      * @param string $apiKey
      * @param string $baseUrl
      */
-    public function __construct(string $apiKey, string $baseUrl = 'https://api.tarwege.com')
+    public function __construct(string $apiKey, string $baseUrl = 'https://sms.tarwege.com/api')
     {
         $this->apiKey  = $apiKey;
         $this->baseUrl = rtrim($baseUrl, '/');
