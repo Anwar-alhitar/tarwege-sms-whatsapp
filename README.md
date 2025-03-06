@@ -1,6 +1,6 @@
 Below is an updated version of the README that reflects usage based on the provided class structure and the Guzzle-based API client implementation.
 
-```markdown
+
 # Tarwege SMS & WhatsApp API Client
 
 Official PHP client for Tarwege's SMS & WhatsApp API with first-class Laravel support. Use your SIM to send SMS as a provider.
@@ -10,7 +10,7 @@ Official PHP client for Tarwege's SMS & WhatsApp API with first-class Laravel su
 [![License](https://img.shields.io/packagist/l/tarwege/sms-whatsapp)](LICENSE)
 [![PHP Version](https://img.shields.io/packagist/php-v/tarwege/sms-whatsapp)](https://php.net)
 
----
+
 
 ## Features ✨
 
