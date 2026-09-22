@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class AccountService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,26 +12,47 @@ class AccountService
     }
 
     /**
-     * Get Partner Earnings.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getPartnerEarnings(array $params = []): mixed
+    public function getEarnings(array $params = []): array
     {
-        return $this->client->callApi('/account/partner-earnings', 'GET', $params);
+        return $this->client->get('/get/earnings', $params);
     }
 
     /**
-     * Get Remaining Credits.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getRemainingCredits(array $params = []): mixed
+    public function getCredits(array $params = []): array
     {
-        return $this->client->callApi('/account/remaining-credits', 'GET', $params);
+        return $this->client->get('/get/credits', $params);
     }
 
     /**
-     * Get Subscription Package.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getSubscriptionPackage(array $params = []): mixed
+    public function getSubscription(array $params = []): array
     {
-        return $this->client->callApi('/account/subscription-package', 'GET', $params);
+        return $this->client->get('/get/subscription', $params);
+    }
+
+    /** @deprecated Use getEarnings() */
+    public function getPartnerEarnings(array $params = []): array
+    {
+        return $this->getEarnings($params);
+    }
+
+    /** @deprecated Use getCredits() */
+    public function getRemainingCredits(array $params = []): array
+    {
+        return $this->getCredits($params);
+    }
+
+    /** @deprecated Use getSubscription() */
+    public function getSubscriptionPackage(array $params = []): array
+    {
+        return $this->getSubscription($params);
     }
 }
