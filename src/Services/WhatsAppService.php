@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class WhatsAppService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,170 +12,199 @@ class WhatsAppService
     }
 
     /**
-     * Delete a received chat.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteReceivedChat(string $chatId): mixed
+    public function deleteReceivedChat(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/chats/received/{$chatId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/wa.received', $id, 'id', $params);
     }
 
     /**
-     * Delete a sent chat.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteSentChat(string $chatId): mixed
+    public function deleteSentChat(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/chats/sent/{$chatId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/wa.sent', $id, 'id', $params);
     }
 
     /**
-     * Delete a WhatsApp account.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteWhatsAppAccount(string $accountId): mixed
+    public function deleteWhatsAppAccount(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/account/{$accountId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/wa.account', $id, 'id', $params);
     }
 
     /**
-     * Delete a WhatsApp campaign.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteWhatsAppCampaign(string $campaignId): mixed
+    public function deleteWhatsAppCampaign(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/campaign/{$campaignId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/wa.campaign', $id, 'id', $params);
     }
 
     /**
-     * Get WhatsApp accounts.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getAccounts(array $params = []): mixed
+    public function getAccounts(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/accounts', 'GET', $params);
+        return $this->client->get('/get/wa.accounts', $params);
     }
 
     /**
-     * Get pending chats.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getPendingChats(array $params = []): mixed
+    public function getPendingChats(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/chats/pending', 'GET', $params);
+        return $this->client->get('/get/wa.pending', $params);
     }
 
     /**
-     * Get received chats.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getReceivedChats(array $params = []): mixed
+    public function getReceivedChats(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/chats/received', 'GET', $params);
+        return $this->client->get('/get/wa.received', $params);
     }
 
     /**
-     * Get sent chats.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getSentChats(array $params = []): mixed
+    public function getSentChats(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/chats/sent', 'GET', $params);
+        return $this->client->get('/get/wa.sent', $params);
     }
 
     /**
-     * Get WhatsApp campaigns.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getWhatsAppCampaigns(array $params = []): mixed
+    public function getWhatsAppCampaigns(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/campaigns', 'GET', $params);
+        return $this->client->get('/get/wa.campaigns', $params);
     }
 
     /**
-     * Get WhatsApp group contacts.
+     * @param  array<string, mixed>  $params  Must include unique and gid unless passed as arguments
+     * @return array<string, mixed>
      */
-    public function getWhatsAppGroupContacts(string $groupId, array $params = []): mixed
+    public function getWhatsAppGroupContacts(string $unique, string $gid, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/groups/{$groupId}/contacts", 'GET', $params);
+        $params['unique'] = $unique;
+        $params['gid'] = $gid;
+
+        return $this->client->get('/get/wa.group.contacts', $params);
     }
 
     /**
-     * Get WhatsApp groups.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getWhatsAppGroups(array $params = []): mixed
+    public function getWhatsAppGroups(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/groups', 'GET', $params);
+        return $this->client->get('/get/wa.groups', $params);
     }
 
     /**
-     * Get WhatsApp QR image.
+     * @return array<string, mixed>
      */
-    public function getWhatsAppQrImage(string $accountId): mixed
+    public function getWhatsAppQrImage(string $token): array
     {
-        return $this->client->callApi("/whatsapp/account/{$accountId}/qr", 'GET');
+        return $this->client->get('/get/wa.qr', ['token' => $token], false);
     }
 
     /**
-     * Get WhatsApp servers.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getWhatsAppServers(array $params = []): mixed
+    public function getWhatsAppServers(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/servers', 'GET', $params);
+        return $this->client->get('/get/wa.servers', $params);
     }
 
     /**
-     * Get WhatsApp information after linking.
+     * @return array<string, mixed>
      */
-    public function getWhatsAppInformationAfterLinking(string $accountId): mixed
+    public function getWhatsAppInformationAfterLinking(string $token): array
     {
-        return $this->client->callApi("/whatsapp/account/{$accountId}/info", 'GET');
+        return $this->client->get('/get/wa.info', ['token' => $token], false);
     }
 
     /**
-     * Link a WhatsApp account.
+     * @param  array<string, mixed>  $params  Optional sid (server id)
+     * @return array<string, mixed>
      */
-    public function linkWhatsAppAccount(array $data): mixed
+    public function linkWhatsAppAccount(array $params = []): array
     {
-        return $this->client->callApi('/whatsapp/account/link', 'POST', $data);
+        return $this->client->get('/create/wa.link', $params);
     }
 
     /**
-     * Relink a WhatsApp account.
+     * @param  array<string, mixed>  $params  Must include unique (account id)
+     * @return array<string, mixed>
      */
-    public function relinkWhatsAppAccount(array $data): mixed
+    public function relinkWhatsAppAccount(array $params): array
     {
-        return $this->client->callApi('/whatsapp/account/relink', 'POST', $data);
+        return $this->client->get('/create/wa.relink', $params);
     }
 
     /**
-     * Send bulk chats.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function sendBulkChats(array $data): mixed
+    public function sendWhatsApp(array $data): array
     {
-        return $this->client->callApi('/whatsapp/chats/send/bulk', 'POST', $data);
+        return $this->client->post('/send/whatsapp', $data);
     }
 
     /**
-     * Send a single chat.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function sendSingleChat(array $data): mixed
+    public function sendWhatsAppBulk(array $data): array
     {
-        return $this->client->callApi('/whatsapp/chats/send/single', 'POST', $data);
+        return $this->client->post('/send/whatsapp.bulk', $data);
     }
 
     /**
-     * Start a WhatsApp campaign.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function startWhatsAppCampaign(string $campaignId, array $data = []): mixed
+    public function startWhatsAppCampaign(int|string $campaignId, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/campaign/{$campaignId}/start", 'POST', $data);
+        $params['campaign'] = $campaignId;
+
+        return $this->client->get('/remote/start.chats', $params);
     }
 
     /**
-     * Stop a WhatsApp campaign.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function stopWhatsAppCampaign(string $campaignId, array $data = []): mixed
+    public function stopWhatsAppCampaign(int|string $campaignId, array $params = []): array
     {
-        return $this->client->callApi("/whatsapp/campaign/{$campaignId}/stop", 'POST', $data);
+        $params['campaign'] = $campaignId;
+
+        return $this->client->get('/remote/stop.chats', $params);
     }
 
-    /**
-     * Validate a WhatsApp phone number.
-     */
-    public function validateWhatsAppPhoneNumber(array $data): mixed
+    /** @deprecated Use sendWhatsApp() */
+    public function sendSingleChat(array $data): array
     {
-        return $this->client->callApi('/whatsapp/phone/validate', 'POST', $data);
+        return $this->sendWhatsApp($data);
+    }
+
+    /** @deprecated Use sendWhatsAppBulk() */
+    public function sendBulkChats(array $data): array
+    {
+        return $this->sendWhatsAppBulk($data);
     }
 }
