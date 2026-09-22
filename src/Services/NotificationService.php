@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class NotificationService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,18 +12,11 @@ class NotificationService
     }
 
     /**
-     * Delete a notification.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteNotification(string $notificationId): mixed
+    public function deleteNotification(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/notifications/{$notificationId}/delete", 'DELETE');
-    }
-
-    /**
-     * Get notifications.
-     */
-    public function getNotifications(array $params = []): mixed
-    {
-        return $this->client->callApi('/notifications', 'GET', $params);
+        return $this->client->deleteById('/delete/notification', $id, 'id', $params);
     }
 }
