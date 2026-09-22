@@ -1,6 +1,7 @@
 {
   "name": "tarwege/sms-whatsapp",
   "description": "A PHP package to interact with Tarwege SMS, WhatsApp, and USSD endpoints.",
+  "version": "2.0.0",
   "type": "library",
   "authors": [
     {
@@ -38,5 +39,8 @@
   "prefer-stable": true,
   "require-dev": {
     "phpunit/phpunit": "^11.5"
+  },
+  "scripts": {
+    "test": "phpunit -c phpunit.xml"
   }
 }
