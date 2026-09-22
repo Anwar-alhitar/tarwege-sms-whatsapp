@@ -3,3 +3,6 @@
 /.idea
 /.vscode
 .env
+.phpunit.result.cache
+/tests
+phpunit.xml
