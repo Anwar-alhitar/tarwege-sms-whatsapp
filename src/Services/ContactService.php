@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class ContactService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,66 +12,74 @@ class ContactService
     }
 
     /**
-     * Create a new contact.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function createContact(array $data): mixed
+    public function createContact(array $data): array
     {
-        return $this->client->callApi('/contacts/create', 'POST', $data);
+        return $this->client->post('/create/contact', $data);
     }
 
     /**
-     * Create a new group.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function createGroup(array $data): mixed
+    public function createGroup(array $data): array
     {
-        return $this->client->callApi('/contacts/group/create', 'POST', $data);
+        return $this->client->post('/create/group', $data);
     }
 
     /**
-     * Delete a contact.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteContact(string $contactId): mixed
+    public function deleteContact(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/contacts/{$contactId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/contact', $id, 'id', $params);
     }
 
     /**
-     * Delete a group.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteGroup(string $groupId): mixed
+    public function deleteGroup(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/contacts/group/{$groupId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/group', $id, 'id', $params);
     }
 
     /**
-     * Delete unsubscribed contacts.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteUnsubscribed(array $params = []): mixed
+    public function deleteUnsubscribed(array $params = []): array
     {
-        return $this->client->callApi('/contacts/unsubscribed/delete', 'DELETE', $params);
+        return $this->client->get('/delete/unsubscribed', $params);
     }
 
     /**
-     * Get contacts.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getContacts(array $params = []): mixed
+    public function getContacts(array $params = []): array
     {
-        return $this->client->callApi('/contacts', 'GET', $params);
+        return $this->client->get('/get/contacts', $params);
     }
 
     /**
-     * Get groups.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getGroups(array $params = []): mixed
+    public function getGroups(array $params = []): array
     {
-        return $this->client->callApi('/contacts/groups', 'GET', $params);
+        return $this->client->get('/get/groups', $params);
     }
 
     /**
-     * Get unsubscribed contacts.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getUnsubscribed(array $params = []): mixed
+    public function getUnsubscribed(array $params = []): array
     {
-        return $this->client->callApi('/contacts/unsubscribed', 'GET', $params);
+        return $this->client->get('/get/unsubscribed', $params);
     }
 }
