@@ -5,7 +5,7 @@ PHP client for the [Tarwege dashboard API](https://sms.tarwege.com/dashboard/doc
 ## Installation
 
 ```bash
-composer require tarwege/sms-whatsapp
+composer require tarwege/sms-whatsapp:^2.0
 ```
 
 Laravel — publish config:

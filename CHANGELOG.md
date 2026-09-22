@@ -51,15 +51,19 @@ Major release: the client now matches the official dashboard API spec (`/api/*`,
 
 ### Migration from 1.x
 
-1. Set `.env`:
+1. Upgrade the package:
+   ```bash
+   composer require tarwege/sms-whatsapp:^2.0
+   ```
+2. Set `.env`:
    ```env
    TARWEGE_API_SECRET=your_secret
    TARWEGE_BASE_URL=https://sms.tarwege.com/api
    ```
-2. Replace invented paths (e.g. `/sms/send/single`) with service methods above; they now hit `/send/sms`, etc.
-3. Wrap calls in `try/catch (TarwegeApiException $e)` and use `$e->getResponse()` for API details.
-4. Update OTP verify calls to pass only the user-supplied OTP string to `verifyOTP()`.
-5. Update WhatsApp QR/info polling to use the `token` from `create/wa.link` response, not the account unique id.
+3. Replace invented paths (e.g. `/sms/send/single`) with service methods above; they now hit `/send/sms`, etc.
+4. Wrap calls in `try/catch (TarwegeApiException $e)` and use `$e->getResponse()` for API details.
+5. Update OTP verify calls to pass only the user-supplied OTP string to `verifyOTP()`.
+6. Update WhatsApp QR/info polling to use the `token` from `create/wa.link` response, not the account unique id.
 
 ## [1.0.0] - earlier
 
