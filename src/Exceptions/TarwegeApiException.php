@@ -3,11 +3,44 @@
 namespace Tarwege\SmsWhatsapp\Exceptions;
 
 use Exception;
+use Throwable;
 
 class TarwegeApiException extends Exception
 {
-    public function __construct($message, $code = 0, \Throwable $previous = null)
+    /** @var array<string, mixed>|null */
+    protected ?array $response;
+
+    /** @var mixed */
+    protected $rawBody;
+
+    /**
+     * @param  array<string, mixed>|null  $response
+     */
+    public function __construct(
+        string $message,
+        int $code = 0,
+        ?Throwable $previous = null,
+        ?array $response = null,
+        $rawBody = null
+    ) {
+        parent::__construct($message, $code, $previous);
+        $this->response = $response;
+        $this->rawBody = $rawBody;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getResponse(): ?array
     {
-        parent::__construct("API Error: {$message} (Code: {$code})", $code, $previous);
+        return $this->response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRawBody()
+    {
+        return $this->rawBody;
     }
 }
