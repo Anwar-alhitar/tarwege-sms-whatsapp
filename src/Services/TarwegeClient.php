@@ -3,84 +3,139 @@
 namespace Tarwege\SmsWhatsapp\Services;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\GuzzleException;
 use Tarwege\SmsWhatsapp\Exceptions\TarwegeApiException;
 
 class TarwegeClient
 {
-    protected $apiKey;
-    protected $baseUrl;
-    protected $client;
+    protected string $secret;
 
-    /**
-     * Constructor.
-     *
-     * @param string $apiKey
-     * @param string $baseUrl
-     */
-    public function __construct(string $apiKey, string $baseUrl = 'https://sms.tarwege.com/api')
+    protected string $baseUrl;
+
+    protected Client $client;
+
+    public function __construct(string $secret, string $baseUrl = 'https://sms.tarwege.com/api', ?Client $httpClient = null)
     {
-        $this->apiKey  = $apiKey;
+        if ($secret === '') {
+            throw new TarwegeApiException('API secret is required.', 0);
+        }
+
+        $this->secret = $secret;
         $this->baseUrl = rtrim($baseUrl, '/');
 
-        // Initialize the Guzzle client with default settings.
-        $this->client = new Client([
+        $this->client = $httpClient ?? new Client([
             'base_uri' => $this->baseUrl,
-            'headers'  => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Accept'        => 'application/json',
+            'headers' => [
+                'Accept' => 'application/json',
             ],
-            'timeout'  => 10.0, // seconds
+            'timeout' => 30.0,
+            'http_errors' => false,
         ]);
     }
 
     /**
-     * Generic method to make API calls.
-     *
-     * @param string $endpoint The API endpoint (relative to the base URL).
-     * @param string $method   HTTP method (GET, POST, PUT, DELETE, etc.).
-     * @param array  $params   Request parameters.
-     *
-     * @return mixed
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      *
      * @throws TarwegeApiException
      */
-    public function callApi(string $endpoint, string $method = 'GET', array $params = []): mixed
+    public function get(string $endpoint, array $params = [], bool $attachSecret = true): array
     {
+        return $this->request('GET', $endpoint, $params, $attachSecret);
+    }
+
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     *
+     * @throws TarwegeApiException
+     */
+    public function post(string $endpoint, array $params = []): array
+    {
+        return $this->request('POST', $endpoint, $params);
+    }
+
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     *
+     * @throws TarwegeApiException
+     */
+    public function request(string $method, string $endpoint, array $params = [], bool $attachSecret = true): array
+    {
+        $endpoint = '/' . ltrim($endpoint, '/');
+        if ($attachSecret) {
+            $params = $this->withSecret($params);
+        }
+
         try {
-            // Prepare options depending on the request method.
             $options = [];
             if (strtoupper($method) === 'GET') {
                 $options['query'] = $params;
             } else {
-                // For non-GET requests, send the data as JSON.
-                $options['json'] = $params;
+                $options['form_params'] = $params;
             }
 
-            // Make the HTTP request.
             $response = $this->client->request($method, $endpoint, $options);
-
-            // Get response status and body.
-            $statusCode = $response->getStatusCode();
-            $body = $response->getBody()->getContents();
-
-            // Decode the JSON response.
-            $data = json_decode($body, true);
-
-            // Check if the response status indicates success.
-            if ($statusCode >= 200 && $statusCode < 300) {
-                return $data;
-            }
-
-            // If status code is not in the success range, throw an exception.
-            throw new TarwegeApiException("API error: HTTP $statusCode", $statusCode);
-        } catch (RequestException $e) {
-            // You can log the error details here if needed.
-            $message = $e->getResponse()
-                ? $e->getResponse()->getBody()->getContents()
-                : $e->getMessage();
-
-            throw new TarwegeApiException("Request failed: " . $message, $e->getCode(), $e);
+        } catch (GuzzleException $e) {
+            throw new TarwegeApiException($e->getMessage(), (int) $e->getCode(), $e);
         }
+
+        $httpCode = $response->getStatusCode();
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+
+        if (! is_array($data)) {
+            throw new TarwegeApiException(
+                'Invalid JSON response from API.',
+                $httpCode,
+                null,
+                null,
+                is_string($body) ? $body : null
+            );
+        }
+
+        $apiStatus = (int) ($data['status'] ?? $httpCode);
+        if ($apiStatus >= 200 && $apiStatus < 300) {
+            return $data;
+        }
+
+        $message = (string) ($data['message'] ?? 'API request failed.');
+        throw new TarwegeApiException($message, $apiStatus, null, $data);
+    }
+
+    /**
+     * @deprecated Use get() or post()
+     *
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     */
+    public function callApi(string $endpoint, string $method = 'GET', array $params = []): array
+    {
+        return $this->request($method, $endpoint, $params);
+    }
+
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     */
+    public function deleteById(string $endpoint, int|string $id, string $idKey = 'id', array $params = []): array
+    {
+        $params[$idKey] = $id;
+
+        return $this->get($endpoint, $params);
+    }
+
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     */
+    protected function withSecret(array $params): array
+    {
+        if (! array_key_exists('secret', $params)) {
+            $params['secret'] = $this->secret;
+        }
+
+        return $params;
     }
 }
