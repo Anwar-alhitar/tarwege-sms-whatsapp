@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class SystemService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,18 +12,20 @@ class SystemService
     }
 
     /**
-     * Get gateway rates.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getGatewayRates(array $params = []): mixed
+    public function getGatewayRates(array $params = []): array
     {
-        return $this->client->callApi('/system/gateway-rates', 'GET', $params);
+        return $this->client->get('/get/rates', $params);
     }
 
     /**
-     * Get shorteners.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getShorteners(array $params = []): mixed
+    public function getShorteners(array $params = []): array
     {
-        return $this->client->callApi('/system/shorteners', 'GET', $params);
+        return $this->client->get('/get/shorteners', $params);
     }
 }
