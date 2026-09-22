@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class UssdService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,34 +12,29 @@ class UssdService
     }
 
     /**
-     * Clear pending USSD.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function clearPendingUssd(array $params = []): mixed
+    public function deleteUssdRequest(int|string $id, array $params = []): array
     {
-        return $this->client->callApi('/ussd/pending/clear', 'POST', $params);
+        return $this->client->deleteById('/delete/ussd', $id, 'id', $params);
     }
 
     /**
-     * Delete a USSD request.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteUssdRequest(string $requestId): mixed
+    public function getUssdRequests(array $params = []): array
     {
-        return $this->client->callApi("/ussd/{$requestId}/delete", 'DELETE');
+        return $this->client->get('/get/ussd', $params);
     }
 
     /**
-     * Get USSD requests.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function getUssdRequests(array $params = []): mixed
+    public function sendUssdRequest(array $data): array
     {
-        return $this->client->callApi('/ussd/requests', 'GET', $params);
-    }
-
-    /**
-     * Send a USSD request.
-     */
-    public function sendUssdRequest(array $data): mixed
-    {
-        return $this->client->callApi('/ussd/send', 'POST', $data);
+        return $this->client->post('/send/ussd', $data);
     }
 }
