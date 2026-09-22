@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class SmsService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,98 +12,135 @@ class SmsService
     }
 
     /**
-     * Delete a received message.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteReceivedMessage(string $messageId): mixed
+    public function deleteReceivedMessage(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/sms/received/{$messageId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/sms.received', $id, 'id', $params);
     }
 
     /**
-     * Delete an SMS campaign.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteSmsCampaign(string $campaignId): mixed
+    public function deleteSmsCampaign(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/sms/campaign/{$campaignId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/sms.campaign', $id, 'id', $params);
     }
 
     /**
-     * Delete a sent message.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function deleteSentMessage(string $messageId): mixed
+    public function deleteSentMessage(int|string $id, array $params = []): array
     {
-        return $this->client->callApi("/sms/sent/{$messageId}/delete", 'DELETE');
+        return $this->client->deleteById('/delete/sms.sent', $id, 'id', $params);
     }
 
     /**
-     * Get devices.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getDevices(array $params = []): mixed
+    public function getDevices(array $params = []): array
     {
-        return $this->client->callApi('/sms/devices', 'GET', $params);
+        return $this->client->get('/get/devices', $params);
     }
 
     /**
-     * Get pending messages.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getPendingMessages(array $params = []): mixed
+    public function getPendingMessages(array $params = []): array
     {
-        return $this->client->callApi('/sms/pending', 'GET', $params);
+        return $this->client->get('/get/sms.pending', $params);
     }
 
     /**
-     * Get received messages.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getReceivedMessages(array $params = []): mixed
+    public function getReceivedMessages(array $params = []): array
     {
-        return $this->client->callApi('/sms/received', 'GET', $params);
+        return $this->client->get('/get/sms.received', $params);
     }
 
     /**
-     * Get SMS campaigns.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getSmsCampaigns(array $params = []): mixed
+    public function getSmsCampaigns(array $params = []): array
     {
-        return $this->client->callApi('/sms/campaigns', 'GET', $params);
+        return $this->client->get('/get/sms.campaigns', $params);
     }
 
     /**
-     * Get sent messages.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function getSentMessages(array $params = []): mixed
+    public function getSmsMessage(array $params = []): array
     {
-        return $this->client->callApi('/sms/sent', 'GET', $params);
+        return $this->client->get('/get/sms.message', $params);
     }
 
     /**
-     * Send bulk messages.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function sendBulkMessages(array $data): mixed
+    public function getSentMessages(array $params = []): array
     {
-        return $this->client->callApi('/sms/send/bulk', 'POST', $data);
+        return $this->client->get('/get/sms.sent', $params);
     }
 
     /**
-     * Send a single message.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function sendSingleMessage(array $data): mixed
+    public function sendSms(array $data): array
     {
-        return $this->client->callApi('/sms/send/single', 'POST', $data);
+        return $this->client->post('/send/sms', $data);
     }
 
     /**
-     * Start an SMS campaign.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function startSmsCampaign(string $campaignId, array $data = []): mixed
+    public function sendSmsBulk(array $data): array
     {
-        return $this->client->callApi("/sms/campaign/{$campaignId}/start", 'POST', $data);
+        return $this->client->post('/send/sms.bulk', $data);
     }
 
     /**
-     * Stop an SMS campaign.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function stopSmsCampaign(string $campaignId, array $data = []): mixed
+    public function startSmsCampaign(int|string $campaignId, array $params = []): array
     {
-        return $this->client->callApi("/sms/campaign/{$campaignId}/stop", 'POST', $data);
+        $params['campaign'] = $campaignId;
+
+        return $this->client->get('/remote/start.sms', $params);
+    }
+
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     */
+    public function stopSmsCampaign(int|string $campaignId, array $params = []): array
+    {
+        $params['campaign'] = $campaignId;
+
+        return $this->client->get('/remote/stop.sms', $params);
+    }
+
+    /** @deprecated Use sendSms() */
+    public function sendSingleMessage(array $data): array
+    {
+        return $this->sendSms($data);
+    }
+
+    /** @deprecated Use sendSmsBulk() */
+    public function sendBulkMessages(array $data): array
+    {
+        return $this->sendSmsBulk($data);
     }
 }
