@@ -4,7 +4,7 @@ namespace Tarwege\SmsWhatsapp\Services;
 
 class OTPService
 {
-    protected $client;
+    protected TarwegeClient $client;
 
     public function __construct(TarwegeClient $client)
     {
@@ -12,18 +12,22 @@ class OTPService
     }
 
     /**
-     * Send an OTP.
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
      */
-    public function sendOTP(array $data): mixed
+    public function sendOTP(array $data): array
     {
-        return $this->client->callApi('/otp/send', 'POST', $data);
+        return $this->client->post('/send/otp', $data);
     }
 
     /**
-     * Verify an OTP.
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
      */
-    public function verifyOTP(array $data): mixed
+    public function verifyOTP(string $otp, array $params = []): array
     {
-        return $this->client->callApi('/otp/verify', 'POST', $data);
+        $params['otp'] = $otp;
+
+        return $this->client->get('/get/otp', $params);
     }
 }
